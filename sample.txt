@@ -1,0 +1,52 @@
+% Sample Moneytracker file
+% Load it by specifying it while running the program (./mt sample.txt)
+% or by running the program and entering `load sample.txt`
+
+% Define people
+person Alice
+person Bob
+person Carol
+person Dan
+
+% Define initial groups
+% Everyone in the house splits the cost of utilities
+% Alice and Bob split the cost of their food
+group Food
+join Food Alice Bob
+group House
+join House Alice Bob Carol Dan
+
+% Payments
+% To pay for something: tx PAYER AMOUNT DESCRIPTION PAYEES
+
+% Alice pays utilities for the house
+tx Alice 50.34 Utilities-Jan group House
+
+% Bob buys Dan's lunch
+tx Bob 6.10 Lunch-Jan22 Dan
+
+% Alice buys some food for herself and Bob
+tx Alice 124 FoodForUs group Food
+
+% Dan buys plane tickets for Alice and Bob
+tx Dan 456.93 plane_tickets Alice Bob
+
+% Dan buys a 3-pack of a game for himself, Bob, and Carol
+tx Dan 66.21 games Dan Bob Carol
+
+% Dan leaves the house
+% Erin joins and starts sharing food with Alice and Bob
+leave House Dan
+person Erin
+join House Erin
+join Food Erin
+
+% `debt Bob Alice` reveals that Bob owes Alice $74.58.
+% He repays it
+tx Bob 74.58 Repayment-Feb15 Alice
+
+% Erin moves in a bit
+tx Erin 133.33 Groceries group Food
+tx Carol 98.76 ErinFurnitureLoan Erin
+
+% Once this has been parsed, try out `debt` and `info` to see what is owed
